@@ -25,7 +25,7 @@ console.log(user);
         <Link href="/blogs" className="hover:text-blue-500 transition">
           Blogs
         </Link>
-        <Link href="/add-blog" className="hover:text-blue-500 transition">
+        <Link href="/dashboard/addblog" className="hover:text-blue-500 transition">
           Add Blog
         </Link>
         <Link href="/dashboard" className="hover:text-blue-500 transition">

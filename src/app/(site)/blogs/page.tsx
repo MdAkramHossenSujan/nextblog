@@ -1,41 +1,61 @@
 // app/blogs/page.tsx
 import { connectDb } from "@/lib/mongodb";
 import Image from "next/image";
-export default async function Home() {
+import Link from "next/link";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+export default async function BlogsPage() {
   const blogsCollection = await connectDb("blogNext");
   const blogs = await blogsCollection.find().toArray();
-  console.log(blogs)
+
   return (
-    <>
-     <div className="p-6 space-y-6">
-      <h1>Blogs</h1>
-      {blogs.map((blog) => (
-        <div key={blog._id.toString()} className="border p-4 rounded shadow">
-          <Image
-            src={blog.imageUrl}
-            alt={blog.title}
-            width={600}
-            height={400}
-            className="w-full h-60 object-cover rounded"
-          />
-          <h2 className="text-xl font-bold mt-2">{blog.title}</h2>
-          <p>{blog.content}</p>
-          <div className="flex items-center mt-2">
-            <Image
-              src={blog.authorImage}
-              alt={blog.authorName}
-               width={600}
-            height={400}
-              className="w-8 h-8 rounded-full mr-2"
-            />
-            <span>{blog.authorName}</span>
-          </div>
-          <small className="text-gray-500">
-            Created at: {new Date(blog.createdAt).toLocaleDateString()}
-          </small>
-        </div>
+    <div className="p-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {blogs.map((blog: any) => (
+        <Card key={blog._id.toString()} className="hover:shadow-lg transition cursor-pointer">
+          <CardHeader>
+            <CardTitle className="py-1">{blog.title}</CardTitle>
+            <CardDescription className="flex items-center gap-2">
+              {blog.authorImage && (
+                <Image
+                  src={blog?.authorImage}
+                  alt={blog.authorName || "Author"}
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+              )}
+              <span>{blog.authorName}</span>
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            {blog.imageUrl && (
+              <Image
+                src={blog?.imageUrl}
+                alt={blog.title}
+                width={400}
+                height={200}
+                className="rounded-md object-cover w-full h-40 mb-3"
+              />
+            )}
+
+            {/* Detail Button */}
+            <Link href={`/blogs/${blog._id.toString()}`}>
+              <Button variant="outline" className="w-full cursor-pointer mt-2">
+                View Details
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
       ))}
     </div>
-    </>
   );
 }
+
