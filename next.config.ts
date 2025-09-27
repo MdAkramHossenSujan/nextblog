@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
       "kinde.com",                 // optional if Kinde sends avatars
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb", // allow larger file uploads (adjust if needed)
+    },
+  },
 };
 
 export default nextConfig;
-

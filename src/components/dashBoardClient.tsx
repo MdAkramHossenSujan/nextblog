@@ -118,7 +118,7 @@ export default function DashboardApp({
                 href={item.path}
                 className={[
                   "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  active ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-100",
+                  active ? "bg-blue-50 text-blue-900" : "text-gray-700 hover:bg-gray-100",
                 ].join(" ")}
                 aria-current={active ? "page" : undefined}
               >

@@ -4,8 +4,8 @@ import Image from "next/image";
 export default async function Home() {
   const blogsCollection = await connectDb("blogNext");
   const blogs = await blogsCollection.find().toArray();
+  console.log(blogs)
   return (
-   
     <>
      <div className="p-6 space-y-6">
       <h1>Blogs</h1>
