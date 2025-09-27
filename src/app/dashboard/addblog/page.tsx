@@ -1,6 +1,7 @@
 "use client";
 
 import handleSubmission from "@/app/utils/actions";
+import SubmitButton from "@/components/shared/submitButton";
 import uploadImage from "@/components/shared/uplaodImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -130,7 +131,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               />
             </div>
 
-            <Button type="submit">Submit</Button>
+            <SubmitButton/>
           </form>
         </CardContent>
       </Card>
