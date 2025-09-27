@@ -73,7 +73,7 @@ export default function DashboardApp({
     path === "/dashboard" ? pathname === "/dashboard" : pathname?.startsWith(path);
 
   const desktopOffsetClass = useMemo(
-    () => (sidebarOpen ? "md:ml-64" : "md:ml-0"),
+    () => (sidebarOpen ? "left-64" : "left-0"),
     [sidebarOpen]
   );
 
@@ -137,7 +137,7 @@ export default function DashboardApp({
       {/* Topbar */}
       <header
         className={[
-          "fixed top-0 right-0 left-0 z-30 border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60",
+          "fixed top-0 right-0 z-30 border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60",
           "flex h-16 items-center justify-between px-4",
           desktopOffsetClass,
         ].join(" ")}
