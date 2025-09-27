@@ -1,11 +1,16 @@
-import DashboardNavbar from '@/components/shared/DashboardNavbar'
-import React from 'react'
+import DashboardApp from "@/components/dashBoardClient";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export default function DashboardPage({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-    <DashboardNavbar/>
-      {children}
-    </>
-  )
+export const metadata = { title: "Dashboard" };
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const authed = await isAuthenticated();
+  const user = authed ? await getUser() : null;
+
+  return <DashboardApp user={user}>{children}</DashboardApp>;
 }
