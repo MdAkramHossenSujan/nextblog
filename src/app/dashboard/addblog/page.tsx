@@ -13,12 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AddBlog() {
   const [contentImage, setContentImage] = useState<string>("");
   const [authorImage, setAuthorImage] = useState<string>("");
-
+const router=useRouter()
   const handleUploadContentImage = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -35,22 +37,29 @@ export default function AddBlog() {
     setAuthorImage(url);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
   const form = e.currentTarget;
-    const formData = new FormData(e.currentTarget);
+  const formData = new FormData(form);
 
-    // append uploaded images
-    if (contentImage) formData.set("imageUrl", contentImage);
-    if (authorImage) formData.set("authorImage", authorImage);
+  // append uploaded images from state
+  if (contentImage) formData.set("imageUrl", contentImage);
+  if (authorImage) formData.set("authorImage", authorImage);
 
-    // log in readable form
-    const values = Object.fromEntries(formData.entries());
-    console.log("Submitting Blog:", values);
+  try {
+    await handleSubmission(formData); // await server action
+    toast.success("Blog added successfully!"); // toast after success
+    form.reset();
+    setContentImage("");
+    setAuthorImage("");
+    router.push("/dashboard");
+  } catch (err: unknown) {
+    if (err instanceof Error) toast.error(err.message);
+    else toast.error("Failed to add blog.");
+    console.error(err);
+  }
+};
 
-    handleSubmission(formData);
-     form.reset();
-  };
 
   return (
     <div className="flex justify-center py-10">

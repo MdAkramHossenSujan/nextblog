@@ -12,5 +12,7 @@ export default async function DashboardLayout({
   const authed = await isAuthenticated();
   const user = authed ? await getUser() : null;
 
-  return <DashboardApp user={user}>{children}</DashboardApp>;
+  return <DashboardApp user={user}>
+    {children}
+    </DashboardApp>;
 }
